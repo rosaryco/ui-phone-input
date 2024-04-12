@@ -1,3 +1,5 @@
+// Total of 20rem wide component, opionated but optimal.
+
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 
 import * as React from "react";
@@ -16,45 +18,58 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Input, InputProps } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import { cn } from "@/lib/utils";
 
-type PhoneInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> &
+type PhoneInputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "value"
+> &
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
   };
 
-const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwardRef<
-  React.ElementRef<typeof RPNInput.default>,
-  PhoneInputProps
->(({ className, onChange, ...props }, ref) => {
-  return (
-    <RPNInput.default
-      ref={ref}
-      className={cn("flex", className)}
-      flagComponent={FlagComponent}
-      countrySelectComponent={CountrySelect}
-      inputComponent={InputComponent}
-      /**
-       * Handles the onChange event.
-       *
-       * react-phone-number-input might trigger the onChange event as undefined
-       * when a valid phone number is not entered. To prevent this,
-       * the value is coerced to an empty string.
-       *
-       * @param {E164Number | undefined} value - The entered value
-       */
-      onChange={(value) => onChange?.(value || "")}
-      {...props}
-    />
+const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
+  React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
+    ({ className, onChange, ...props }, ref) => {
+      return (
+        <RPNInput.default
+          ref={ref}
+          className={cn("flex", className)}
+          flagComponent={FlagComponent}
+          countrySelectComponent={CountrySelect}
+          inputComponent={InputComponent}
+          /**
+           * Handles the onChange event.
+           *
+           * react-phone-number-input might trigger the onChange event as undefined
+           * when a valid phone number is not entered. To prevent this,
+           * the value is coerced to an empty string.
+           *
+           * @param {E164Number | undefined} value - The entered value
+           */
+          onChange={(value) => onChange?.(value || "")}
+          {...props}
+        />
+      );
+    },
   );
-});
 PhoneInput.displayName = "PhoneInput";
 
-const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => (
-  <Input className={cn("rounded-s-none rounded-e-lg", className)} {...props} ref={ref} />
-));
+const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => (
+    <Input
+      className={cn("w-[16rem] rounded-e-lg rounded-s-none", className)}
+      {...props}
+      ref={ref}
+    />
+  ),
+);
 InputComponent.displayName = "InputComponent";
 
 type CountrySelectOption = { label: string; value: RPNInput.Country };
@@ -66,7 +81,12 @@ type CountrySelectProps = {
   options: CountrySelectOption[];
 };
 
-const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProps) => {
+const CountrySelect = ({
+  disabled,
+  value,
+  onChange,
+  options,
+}: CountrySelectProps) => {
   const handleSelect = React.useCallback(
     (country: RPNInput.Country) => {
       onChange(country);
@@ -80,14 +100,19 @@ const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProp
         <Button
           type="button"
           variant={"outline"}
-          className={cn("flex gap-1 rounded-e-none rounded-s-lg px-3")}
+          className={cn("flex w-[4rem] gap-1 rounded-e-none rounded-s-lg px-3")}
           disabled={disabled}
         >
           <FlagComponent country={value} countryName={value} />
-          <ChevronsUpDown className={cn("h-4 w-4 opacity-50 -mr-2", disabled ? "hidden" : "opacity-100")} />
+          <ChevronsUpDown
+            className={cn(
+              "-mr-2 h-4 w-4 opacity-50",
+              disabled ? "hidden" : "opacity-100",
+            )}
+          />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[300px]">
+      <PopoverContent className="w-[20rem] p-0.5" align="start">
         <Command>
           <CommandList>
             <CommandInput placeholder="Search country..." />
@@ -101,15 +126,21 @@ const CountrySelect = ({ disabled, value, onChange, options }: CountrySelectProp
                     key={option.value}
                     onSelect={() => handleSelect(option.value)}
                   >
-                    <FlagComponent country={option.value} countryName={option.label} />
-                    <span className="text-sm flex-1">{option.label}</span>
+                    <FlagComponent
+                      country={option.value}
+                      countryName={option.label}
+                    />
+                    <span className="flex-1 text-sm">{option.label}</span>
                     {option.value && (
                       <span className="text-sm text-foreground/50">
                         {`+${RPNInput.getCountryCallingCode(option.value)}`}
                       </span>
                     )}
                     <CheckIcon
-                      className={cn("ml-auto h-4 w-4", option.value === value ? "opacity-100" : "opacity-0")}
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        option.value === value ? "opacity-100" : "opacity-0",
+                      )}
                     />
                   </CommandItem>
                 ))}
