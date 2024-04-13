@@ -1,7 +1,6 @@
 "use client";
 
 import Showcase from "@/app/(home)/sections/generic-input";
-import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Home() {
   return (
