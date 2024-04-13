@@ -1,5 +1,4 @@
 // Total of 20rem wide component, opionated but optimal.
-
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 
 import * as React from "react";
@@ -87,15 +86,22 @@ const CountrySelect = ({
   onChange,
   options,
 }: CountrySelectProps) => {
-  const handleSelect = React.useCallback(
-    (country: RPNInput.Country) => {
-      onChange(country);
-    },
-    [onChange],
-  );
+  const [open, setOpen] = React.useState(false);
+  const handleSelect = (country: RPNInput.Country) => {
+    onChange(country);
+  };
+
+  const setOpenWithDelay = (opening: boolean) => {
+    setTimeout(
+      () => {
+        setOpen(opening);
+      },
+      opening ? 0 : 200,
+    );
+  };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpenWithDelay}>
       <PopoverTrigger asChild>
         <Button
           type="button"
@@ -130,7 +136,7 @@ const CountrySelect = ({
                       country={option.value}
                       countryName={option.label}
                     />
-                    <span className="flex-1 text-sm">{option.label}</span>
+                    <span className="flex-1 text-base">{option.label}</span>
                     {option.value && (
                       <span className="text-sm text-foreground/50">
                         {`+${RPNInput.getCountryCallingCode(option.value)}`}
@@ -156,7 +162,7 @@ const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20">
+    <span className="flex h-4 w-6 scale-125 overflow-hidden rounded-sm bg-foreground/20">
       {Flag && <Flag title={countryName} />}
     </span>
   );
