@@ -2,7 +2,7 @@
 
 Custom shadcn/ui wrapper around [react-phone-number-input](https://www.npmjs.com/package/react-phone-number-input).
 
-![img](./assets/showcase-1.png)
+![img](./assets/demo.png)
 
 Component is 20rem wide, which we believe is ideal, thus fixed at it.
 
