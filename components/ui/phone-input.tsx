@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/popover";
 
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "./scroll-area";
 
 type PhoneInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -121,6 +122,7 @@ const CountrySelect = ({
       <PopoverContent className="w-[20rem] p-0.5" align="start">
         <Command>
           <CommandList>
+            <ScrollArea className="h-[18rem]">
             <CommandInput placeholder="Search country..." />
             <CommandEmpty>No country found.</CommandEmpty>
             <CommandGroup>
@@ -150,7 +152,8 @@ const CountrySelect = ({
                     />
                   </CommandItem>
                 ))}
-            </CommandGroup>
+              </CommandGroup>
+            </ScrollArea>
           </CommandList>
         </Command>
       </PopoverContent>
