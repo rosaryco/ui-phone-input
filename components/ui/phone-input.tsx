@@ -53,11 +53,11 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
            *
            * @param {E164Number | undefined} value - The entered value
            */
-          onChange={(value) => onChange?.(value || "")}
+          onChange={(value) => onChange?.(value || ("" as RPNInput.Value))}
           {...props}
         />
       );
-    },
+    }
   );
 PhoneInput.displayName = "PhoneInput";
 
@@ -68,7 +68,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
       {...props}
       ref={ref}
     />
-  ),
+  )
 );
 InputComponent.displayName = "InputComponent";
 
@@ -97,7 +97,7 @@ const CountrySelect = ({
       () => {
         setOpen(opening);
       },
-      opening ? 0 : 200,
+      opening ? 0 : 200
     );
   };
 
@@ -114,7 +114,7 @@ const CountrySelect = ({
           <ChevronsUpDown
             className={cn(
               "-mr-2 h-4 w-4 opacity-50",
-              disabled ? "hidden" : "opacity-100",
+              disabled ? "hidden" : "opacity-100"
             )}
           />
         </Button>
@@ -123,35 +123,35 @@ const CountrySelect = ({
         <Command>
           <CommandList>
             <ScrollArea className="h-[18rem]">
-            <CommandInput placeholder="Search country..." />
-            <CommandEmpty>No country found.</CommandEmpty>
-            <CommandGroup>
-              {options
-                .filter((x) => x.value)
-                .map((option) => (
-                  <CommandItem
-                    className="gap-2"
-                    key={option.value}
-                    onSelect={() => handleSelect(option.value)}
-                  >
-                    <FlagComponent
-                      country={option.value}
-                      countryName={option.label}
-                    />
-                    <span className="flex-1 text-base">{option.label}</span>
-                    {option.value && (
-                      <span className="text-sm text-foreground/50">
-                        {`+${RPNInput.getCountryCallingCode(option.value)}`}
-                      </span>
-                    )}
-                    <CheckIcon
-                      className={cn(
-                        "ml-auto h-4 w-4",
-                        option.value === value ? "opacity-100" : "opacity-0",
+              <CommandInput placeholder="Search country..." />
+              <CommandEmpty>No country found.</CommandEmpty>
+              <CommandGroup>
+                {options
+                  .filter((x) => x.value)
+                  .map((option) => (
+                    <CommandItem
+                      className="gap-2"
+                      key={option.value}
+                      onSelect={() => handleSelect(option.value)}
+                    >
+                      <FlagComponent
+                        country={option.value}
+                        countryName={option.label}
+                      />
+                      <span className="flex-1 text-base">{option.label}</span>
+                      {option.value && (
+                        <span className="text-sm text-foreground/50">
+                          {`+${RPNInput.getCountryCallingCode(option.value)}`}
+                        </span>
                       )}
-                    />
-                  </CommandItem>
-                ))}
+                      <CheckIcon
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          option.value === value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
               </CommandGroup>
             </ScrollArea>
           </CommandList>
