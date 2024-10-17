@@ -130,7 +130,7 @@ const CountrySelect = ({
                   .filter((x) => x.value)
                   .map((option) => (
                     <CommandItem
-                      className="gap-2"
+                      className="gap-2 cursor-pointer"
                       key={option.value}
                       onSelect={() => handleSelect(option.value)}
                     >
